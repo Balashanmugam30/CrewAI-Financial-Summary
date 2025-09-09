@@ -1,3 +1,4 @@
+````markdown
 # CrewAI Financial Market Summary Agent 🚀📈
 
 Automate your daily US financial market insights with AI-powered summaries, charts, and multilingual reports—delivered straight to your Telegram!  
@@ -85,12 +86,6 @@ The script will execute the entire workflow—news gathering, summarization, cha
 
 ---
 
-## 📸 Demo (Optional)
-
-*(Include a screenshot of the PDF report or a chart if available to impress viewers)*
-
----
-
 ## 🚀 Why This Project is Awesome
 
 * Fully automated end-to-end financial report system.
@@ -109,3 +104,5 @@ The script will execute the entire workflow—news gathering, summarization, cha
 ---
 
 Made with ❤️ by **Balashanmugam S**
+> ⚠️ Warning: This action is **permanent** and cannot be undone. Make sure to back up any important data before deleting.
+```
