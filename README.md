@@ -1,4 +1,3 @@
-````markdown
 # CrewAI Financial Market Summary Agent 🚀📈
 
 Automate your daily US financial market insights with AI-powered summaries, charts, and multilingual reports—delivered straight to your Telegram!  
@@ -46,9 +45,10 @@ This Python-based multi-agent system leverages the **CrewAI framework** to gener
 ```bash
 git clone https://github.com/Balashanmugam30/CrewAI-Financial-Summary.git
 cd CrewAI-Financial-Summary
-````
+2. Create a Virtual Environment
+bash
+Copy code
 
-### 2. Create a Virtual Environment
 
 ```bash
 python -m venv .venv
@@ -106,3 +106,4 @@ The script will execute the entire workflow—news gathering, summarization, cha
 Made with ❤️ by **Balashanmugam S**
 > ⚠️ Warning: This action is **permanent** and cannot be undone. Make sure to back up any important data before deleting.
 ```
+
