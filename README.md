@@ -48,12 +48,9 @@ cd CrewAI-Financial-Summary
 2. Create a Virtual Environment
 bash
 Copy code
-
-
-```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
-```
+
 
 ### 3. Install Dependencies
 
@@ -106,4 +103,5 @@ The script will execute the entire workflow—news gathering, summarization, cha
 Made with ❤️ by **Balashanmugam S**
 > ⚠️ Warning: This action is **permanent** and cannot be undone. Make sure to back up any important data before deleting.
 ```
+
 
