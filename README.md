@@ -1,6 +1,7 @@
+````markdown
 # CrewAI Financial Market Summary Agent 🚀📈
 
-Automate your daily US financial market insights with AI-powered summaries, charts, and multilingual reports—delivered straight to your Telegram!  
+Automate your daily US financial market insights with AI-powered summaries, relevant images, and multilingual reports—delivered straight to your Telegram!  
 
 This Python-based multi-agent system leverages the **CrewAI framework** to generate and distribute a professional financial market summary every day after US markets close.
 
@@ -17,11 +18,11 @@ This Python-based multi-agent system leverages the **CrewAI framework** to gener
 - **Multilingual Translation** 🌐  
   Translates the summary into **Arabic, Hindi, and Hebrew**.  
 
-- **Stock Chart Generation** 📊  
-  Detects relevant stock tickers and generates price charts using Matplotlib.  
+- **Related Image Discovery** 🖼️  
+  Finds and downloads relevant charts or images from the web based on the news summary’s content.  
 
 - **PDF Report Generation** 📝  
-  Compiles the summary, translations, and charts into a professional PDF document.  
+  Compiles the summary, translations, and found images into a professional PDF document.  
 
 - **Automated Distribution** 📬  
   Sends the final PDF to a designated Telegram channel automatically.  
@@ -34,7 +35,6 @@ This Python-based multi-agent system leverages the **CrewAI framework** to gener
 - **Framework:** CrewAI (latest)  
 - **LLM Provider:** LiteLLM with OpenAI GPT-3.5-Turbo  
 - **Search Tool:** Tavily  
-- **Data & Charting:** yfinance, Matplotlib  
 - **PDF Generation:** reportlab  
 
 ---
@@ -42,24 +42,28 @@ This Python-based multi-agent system leverages the **CrewAI framework** to gener
 ## ⚙️ Setup & Installation
 
 ### 1. Clone the Repository
+```bash
 git clone https://github.com/Balashanmugam30/CrewAI-Financial-Summary.git
 cd CrewAI-Financial-Summary
-### 2. Create a Virtual Environment
-python -m venv .venv
-source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
+````
 
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv .venv
+# On Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+```
 
 ### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install crewai crewai-tools litellm "tavily-python" yfinance matplotlib reportlab python-dotenv requests
 ```
-
-> 💡 Tip: Create `requirements.txt` with `pip freeze > requirements.txt` after installing all packages.
 
 ### 4. Configure Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory and add the following keys:
 
 ```
 TAVILY_API_KEY="your_tavily_api_key"
@@ -76,7 +80,7 @@ TELEGRAM_CHAT_ID="your_telegram_channel_id"
 python main.py
 ```
 
-The script will execute the entire workflow—news gathering, summarization, chart creation, PDF generation—and send the report to your Telegram channel.
+The script will execute the entire workflow and send the report to your Telegram channel.
 
 ---
 
@@ -84,7 +88,8 @@ The script will execute the entire workflow—news gathering, summarization, cha
 
 * Fully automated end-to-end financial report system.
 * Multilingual support for global reach.
-* Professional charts and PDF reports, ready for executives.
+* Finds and embeds real market-related images and charts.
+* Professional PDF reports, ready for executives.
 * Demonstrates advanced AI integration and multi-agent coordination.
 
 ---
@@ -92,7 +97,7 @@ The script will execute the entire workflow—news gathering, summarization, cha
 ## 🔮 Future Improvements
 
 * Add support for more languages.
-* Include more advanced chart visualizations.
+* Include additional sources for image discovery.
 * Schedule daily reports with cron or a cloud function.
 
 ---
