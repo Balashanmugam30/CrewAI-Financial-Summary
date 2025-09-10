@@ -38,7 +38,7 @@ analyst = Agent(
     ),
     verbose=True,
     allow_delegation=False,
-    tools=[] 
+    tools=[]
 )
 
 writer = Agent(
@@ -90,29 +90,36 @@ print("## Crew Work Complete. Final Report Text:")
 print(final_report_text)
 print("########################\n")
 
-print("📊 Generating charts and PDF...")
+print("🖼️ Finding and downloading related images...")
 summary_part = final_report_text.split("---")[0]
 tickers = re.findall(r"\b[A-Z]{1,5}\b", summary_part)
 if not tickers:
-    tickers = ["SPY", "AAPL"]
+    tickers = ["S&P 500", "NASDAQ Composite"] 
 
-chart_filenames = []
-for ticker in list(set(tickers))[:2]:
+image_filenames = []
+for topic in list(set(tickers))[:2]: 
     try:
-        df = yf.download(ticker, period="5d", interval="1h", progress=False)
-        if not df.empty:
-            plt.figure(figsize=(10, 5))
-            df['Close'].plot(title=f"{ticker} 5-Day Price Chart")
-            filename = f"chart_{ticker}.png"
-            plt.savefig(filename)
-            plt.close()
-            chart_filenames.append(filename)
-            print(f"✅ Generated chart for {ticker}")
-    except Exception as e:
-        print(f"Could not generate chart for {ticker}: {e}")
+        image_search_results = client.search(query=f"latest financial chart for {topic}", search_depth="basic", include_images=True)
+        if image_search_results.get('images'):
+            image_url = image_search_results['images'][0]
+            response = requests.get(image_url, stream=True)
+            response.raise_for_status() 
+            
+            filename = f"image_{topic.replace(' ', '_')}.jpg"
+            with open(filename, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            image_filenames.append(filename)
+            print(f"✅ Downloaded image for {topic}")
 
+    except Exception as e:
+        print(f"Could not find or download image for {topic}: {e}")
+
+
+print("📊 Generating final PDF report...")
 try:
-    pdf_path = "daily_market_summary.pdf"
+    pdf_path = "daily_market_summary_v2.pdf" 
     run_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     c = canvas.Canvas(pdf_path, pagesize=letter)
     w, h = letter
@@ -135,21 +142,22 @@ try:
             text_obj = c.beginText(40, h-40)
             text_obj.setFont("Arial" if 'Arial' in pdfmetrics.getRegisteredFontNames() else "Helvetica", 10)
     c.drawText(text_obj)
-    for img in chart_filenames:
+    for img in image_filenames:
         c.showPage()
         c.setFont("Helvetica-Bold", 14)
-        c.drawString(40, h - 40, "Supporting Charts")
+        c.drawString(40, h - 40, "Related Images Found")
         c.drawImage(img, 40, h - 400, width=500, preserveAspectRatio=True)
     c.save()
-    print(f"✅ Successfully created PDF: {pdf_path}")
+    print(f"✅ Successfully created updated PDF: {pdf_path}")
+    
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     if token and chat_id:
-        print("📲 Sending report to Telegram...")
+        print("📲 Sending updated report to Telegram...")
         url = f"https://api.telegram.org/bot{token}/sendDocument"
         with open(pdf_path, "rb") as f:
             files = {"document": f}
-            data = {"chat_id": chat_id, "caption": f"Daily Market Summary {run_time}"}
+            data = {"chat_id": chat_id, "caption": f"Updated Daily Market Summary {run_time}"}
             response = requests.post(url, files=files, data=data, timeout=30)
             if response.status_code == 200:
                 print("✅ Report sent successfully to Telegram.")
